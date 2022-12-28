@@ -2,8 +2,8 @@ package com.koreait.projectboard.domain;
 
 import java.time.LocalDateTime;
 
-public class article {
-    private long id;
+public class Article {
+    private Long id;
     private String title;
     private String content;
     private String hashtag;
