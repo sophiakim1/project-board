@@ -17,41 +17,38 @@ import java.util.Objects;
 import java.util.Set;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
 @Table(indexes =  {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),
         @Index(columnList = "createdAt"),
-        @Index(columnList = "createdBy"),
+        @Index(columnList = "createdBy")
 })
-@EntityListeners(AuditingEntityListener.class) //클래스 리스너
+
 @Entity
-public class Article {
+public class Article extends AuditingFields{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Setter @ManyToOne(optional = false) private UserAccount userAccount; // 유저 정보
     @Setter @Column(nullable = false) private String title;
     @Setter @Column(nullable = false, length = 10000) private String content;
     @Setter private String hashtag;
 
-    @CreatedDate @Column(nullable = false) private LocalDateTime createdAt;
-    @CreatedBy @Column(nullable = false, length = 100) private String createdBy;
-    @LastModifiedDate @Column(nullable = false) private LocalDateTime modifiedAt;
-    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy;
-
     @ToString.Exclude
-    @OrderBy("id")
+    @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
     protected Article() {}
-    private Article(String title, String content, String hashtag) {
+    private Article(UserAccount userAccount, String title, String content, String hashtag) {
+        this.userAccount = userAccount;
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
 
-    public static Article of(String title, String content, String hashtag) {
-        return new Article(title, content, hashtag);
+    public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
+        return new Article(userAccount, title, content, hashtag);
     }
 
     @Override
