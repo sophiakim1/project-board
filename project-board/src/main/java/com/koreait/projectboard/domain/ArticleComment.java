@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -20,9 +19,10 @@ public class ArticleComment extends AuditingFields{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Setter @ManyToOne(optional = false) private Article article; //게시글(id)
-    @Setter @ManyToOne(optional = false) private UserAccount userAccount; //유저정보
-    @Setter @Column(nullable = false, length = 500) private String content;
+
+    @Setter @ManyToOne(optional = false) private Article article;    // 게시글(id)
+    @Setter @ManyToOne(optional = false) @JoinColumn(name="userId") private UserAccount userAccount; // 유저정보
+    @Setter @Column(nullable = false, length = 500) private String content;    // 본문
 
     protected ArticleComment() {}
 

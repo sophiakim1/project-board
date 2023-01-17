@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<thlogic>
+    <attr sel="#home" th:href="@{/}"/>
+    <attr sel="#hashtag" th:href="@{/articles/search-hashtag}"/>
+    <attr sel="#username" sec:authorize="isAuthenticated()" sec:authentication="name"/>
+    <attr sel="#login" sec:authorize="!isAuthenticated()" th:href="@{/login}"/>
+    <attr sel="#logout" sec:authorize="isAuthenticated()" th:href="@{/logout}"/>
+</thlogic>
+
+<!--!isAuthenticated 로그인 버튼 보이고 아니면 안보이고-->

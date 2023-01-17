@@ -7,9 +7,9 @@
         <attr sel="#hashtags" th:remove="all-but-first">
             <attr sel="div" th:each="hashtag : ${hashtags}">
                 <attr sel="a" th:class="'text-reset'" th:text="${hashtag}" th:href="@{/articles/search-hashtag(
-                      page=${param.page},
-                      sort=${param.sort},
-                      searchValue=${hashtag}
+                    page=${param.page},
+                    sort=${param.sort},
+                    searchValue=${hashtag}
                 )}"/>
             </attr>
         </attr>
@@ -22,7 +22,6 @@
                     searchType=${param.searchType},
                     searchValue=${param.searchValue}
                 )}"/>
-                <!-- ,searchType=${param.searchType},searchValue=${param.searchValue}   검색후 sorting 가능하게 -->
                 <attr sel="th.hashtag/a" th:text="'해시태그'" th:href="@{/articles(
                     page=${articles.number},
                     sort='hashtag' + (*{sort.getOrderFor('hashtag')} != null ? (*{sort.getOrderFor('hashtag').direction.name} != 'DESC' ? ',desc' : '') : ''),
@@ -68,5 +67,4 @@
               th:href="@{/articles(page=${articles.number + 1}, searchType=${param.searchType}, searchValue=${param.searchValue})}"
               th:class="'page-link' + (${articles.number} >= ${articles.totalPages - 1} ? ' disabled':'')" />
     </attr>
-    <!-- , searchType=${param.searchType}, searchValue=${param.searchValue} 검색후 페이지 변경에도 기존 페이지 유지 -->
 </thlogic>

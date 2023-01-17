@@ -16,6 +16,9 @@ public record ArticleDto(
         String modifiedBy,
         LocalDateTime modifiedAt
 ) {
+    public static ArticleDto of(UserAccountDto userAccountDto, String title, String content, String hashtag){
+        return new ArticleDto(null, userAccountDto, title, content, hashtag, null, null, null, null);
+    }
     public static ArticleDto of(Long id, UserAccountDto userAccountDto, String title, String content, String hashtag, String createdBy, LocalDateTime createdAt, String modifiedBy, LocalDateTime modifiedAt){
         return new ArticleDto(id, userAccountDto, title, content, hashtag, createdBy, createdAt, modifiedBy, modifiedAt);
     }
@@ -34,9 +37,9 @@ public record ArticleDto(
         );
     }
 
-    public Article toEntity(){
+    public Article toEntity(UserAccount userAccount){
         return Article.of(
-                userAccountDto.toEntity(),
+                userAccount,
                 title,
                 content,
                 hashtag

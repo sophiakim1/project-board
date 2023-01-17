@@ -4,6 +4,7 @@
     <attr sel="#footer" th:replace="footer :: footer"/>
 
     <attr sel="main" th:object="${articles}">
+        <attr sel="#search-form" th:action="@{/articles}" th:method="get"/>
         <attr sel="#search-type" th:remove="all-but-first">
             <attr sel="option[0]"
                   th:each="searchType : ${searchTypes}"
@@ -21,7 +22,6 @@
                     searchType=${param.searchType},
                     searchValue=${param.searchValue}
                 )}"/>
-<!-- ,searchType=${param.searchType},searchValue=${param.searchValue}   검색후 sorting 가능하게 -->
                 <attr sel="th.hashtag/a" th:text="'해시태그'" th:href="@{/articles(
                     page=${articles.number},
                     sort='hashtag' + (*{sort.getOrderFor('hashtag')} != null ? (*{sort.getOrderFor('hashtag').direction.name} != 'DESC' ? ',desc' : '') : ''),
@@ -53,6 +53,7 @@
             </attr>
         </attr>
     </attr>
+    <attr sel="#write-article" sec:authorize="isAuthenticated()" th:href="@{/articles/form}"/>
 
     <attr sel="#pagination">
         <attr sel="li[0]/a" th:text="'previous'"
@@ -67,5 +68,4 @@
               th:href="@{/articles(page=${articles.number + 1}, searchType=${param.searchType}, searchValue=${param.searchValue})}"
               th:class="'page-link' + (${articles.number} >= ${articles.totalPages - 1} ? ' disabled':'')" />
     </attr>
-<!-- , searchType=${param.searchType}, searchValue=${param.searchValue} 검색후 페이지 변경에도 기존 페이지 유지 -->
 </thlogic>

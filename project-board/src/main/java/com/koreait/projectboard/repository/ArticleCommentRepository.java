@@ -1,8 +1,6 @@
 package com.koreait.projectboard.repository;
 
-import com.koreait.projectboard.domain.Article;
 import com.koreait.projectboard.domain.ArticleComment;
-import com.koreait.projectboard.domain.QArticle;
 import com.koreait.projectboard.domain.QArticleComment;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;

@@ -5,14 +5,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @ToString
 @Table(indexes = {
-        @Index(columnList = "userid", unique = true),
         @Index(columnList = "email", unique = true),
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
@@ -20,9 +17,9 @@ import java.util.Set;
 @Entity
 public class UserAccount extends AuditingFields {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Setter @Column(nullable = false, length = 50) private String userId;
+    @Column(length = 50)
+    private String userId;
+
     @Setter @Column(nullable = false) private String userPassword;
     @Setter @Column(length = 100) private String email;
     @Setter @Column(length = 100) private String nickname;
@@ -44,14 +41,14 @@ public class UserAccount extends AuditingFields {
     }
 
     @Override
-    public int hashCode() { //메모리 주소를 뽑아오기
-        return Objects.hash(id);
+    public int hashCode() {
+        return Objects.hash(userId);
     }
 
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;
         if(!(obj instanceof UserAccount userAccount)) return false;
-        return id != null && id.equals(userAccount.id);
+        return userId != null && userId.equals(userAccount.userId);
     }
 }

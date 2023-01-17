@@ -1,6 +1,7 @@
 package com.koreait.projectboard.dto;
 
 import com.koreait.projectboard.domain.Article;
+import org.hibernate.boot.jaxb.internal.stax.LocalSchemaLocator;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 public record ArticleWithCommentsDto(
         Long id,
         UserAccountDto userAccountDto,
-        Set<ArticleCommentsDto> articleCommentsDtos,
+        Set<ArticleCommentDto> articleCommentDtos,
         String title,
         String content,
         String hashtag,
@@ -19,15 +20,16 @@ public record ArticleWithCommentsDto(
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
-    public static ArticleWithCommentsDto of(Long id, UserAccountDto userAccountDto, Set<ArticleCommentsDto> articleCommentsDtos, String title, String content, String hashtag, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy){
-        return new ArticleWithCommentsDto(id, userAccountDto, articleCommentsDtos, title, content, hashtag, createdAt, createdBy, modifiedAt, modifiedBy);
+    public static ArticleWithCommentsDto of(Long id, UserAccountDto userAccountDto, Set<ArticleCommentDto> articleCommentDtos, String title, String content, String hashtag, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy){
+        return new ArticleWithCommentsDto(id, userAccountDto, articleCommentDtos, title, content, hashtag, createdAt, createdBy, modifiedAt, modifiedBy);
     }
+
     public static ArticleWithCommentsDto from(Article entity){
         return new ArticleWithCommentsDto(
                 entity.getId(),
                 UserAccountDto.from(entity.getUserAccount()),
                 entity.getArticleComments().stream()
-                        .map(ArticleCommentsDto::from)
+                        .map(ArticleCommentDto::from)
                         .collect(Collectors.toCollection(LinkedHashSet::new)),
                 entity.getTitle(),
                 entity.getContent(),
@@ -38,4 +40,5 @@ public record ArticleWithCommentsDto(
                 entity.getModifiedBy()
         );
     }
+
 }

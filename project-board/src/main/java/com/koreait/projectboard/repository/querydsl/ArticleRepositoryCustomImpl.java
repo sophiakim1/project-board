@@ -13,7 +13,7 @@ public class ArticleRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
     // select distinct(hashtag) from article where hashtag is not null;
     @Override
-    public List<String> findAllDistinctHashtags(){
+    public List<String> findAllDistinctHashtags() {
         QArticle article = QArticle.article;
         return from(article)
                 .distinct()
@@ -21,5 +21,4 @@ public class ArticleRepositoryCustomImpl extends QuerydslRepositorySupport imple
                 .where(article.hashtag.isNotNull())
                 .fetch();
     }
-
 }
