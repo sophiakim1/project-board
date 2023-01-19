@@ -26,7 +26,7 @@ public record ArticleDto(
     public static ArticleDto from(Article entity){
         return new ArticleDto(
                 entity.getId(),
-                UserAccountDto.from(entity.getUserAccount()),
+                UserAccountDto.from(entity.getUserAccount()), //   getUserAccountd에서 가저와서  UserAccountDto 적용
                 entity.getTitle(),
                 entity.getContent(),
                 entity.getHashtag(),
@@ -39,7 +39,7 @@ public record ArticleDto(
 
     public Article toEntity(UserAccount userAccount){
         return Article.of(
-                userAccount,
+                userAccountDto.toEntity(),
                 title,
                 content,
                 hashtag

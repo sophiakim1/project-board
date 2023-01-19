@@ -23,10 +23,10 @@ import java.util.List;
 
 @RequestMapping("articles")
 @Controller
-@RequiredArgsConstructor
+@RequiredArgsConstructor // 생성자 추가시 작성
 public class ArticleController {
 
-    private final ArticleService articleService;
+    private final ArticleService articleService; // 생성자
     private final PaginationService paginationService;
 
     @GetMapping
@@ -35,13 +35,14 @@ public class ArticleController {
             @RequestParam(required = false)String searchValue,
             @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map
     ){
-//        map.addAttribute("articles", articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from));
+//        map.addAttribute("articles", List.of()); //처음에 만든거 주석
+//        map.addAttribute("articles",articleService.searchArticles(searchType,searchValue, pageable).map(ArticleResponse::from)); //페이징 만들고나서 주석
         Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from);
-        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages());
-        map.addAttribute("articles", articles);
-        map.addAttribute("paginationBarNumbers", barNumbers);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages()); //메소드를 만들어서 이렇게 가져올 수 있음
+        map.addAttribute("articles", articles); //10개씩 쪼개진 데이터
+        map.addAttribute("paginationBarNumbers", barNumbers); //페이지 정보
         map.addAttribute("searchTypes", SearchType.values());
-        return "articles/index";
+        return "articles/index"; // articles의 index 전달
     }
 
     @GetMapping("/{articleId}")
@@ -54,17 +55,17 @@ public class ArticleController {
     }
 
     @GetMapping("/search-hashtag")
-    public String searchArticleHashtag(
-            @RequestParam(required = false)String searchValue,
-            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map
+    public String searchArticleHashtag( //searchType이 hashtag로 정해져 있어서 지움!
+                                        @RequestParam(required = false)String searchValue,
+                                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map
     ){
         Page<ArticleResponse> articles = articleService.searchArticleViaHashTag(searchValue, pageable).map(ArticleResponse::from);
-        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages());
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages()); //메소드를 만들어서 이렇게 가져올 수 있음
         List<String> hashTags = articleService.getHashtags();
 
-        map.addAttribute("articles", articles);
+        map.addAttribute("articles", articles); //10개씩 쪼개진 데이터
         map.addAttribute("hashtags", hashTags);
-        map.addAttribute("paginationBarNumbers", barNumbers);
+        map.addAttribute("paginationBarNumbers", barNumbers); //페이지 정보
         map.addAttribute("searchTypes", SearchType.values());
         return "articles/search-hashtag";
     }

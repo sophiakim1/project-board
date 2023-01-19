@@ -5,6 +5,7 @@ import com.koreait.projectboard.domain.UserAccount;
 import java.time.LocalDateTime;
 
 public record UserAccountDto(
+//            Long id,
         String userId,
         String userPassword,
         String email,
@@ -25,6 +26,7 @@ public record UserAccountDto(
 
     public static UserAccountDto from(UserAccount entity){
         return new UserAccountDto(
+//                entity.getId(),
                 entity.getUserId(),
                 entity.getUserPassword(),
                 entity.getEmail(),

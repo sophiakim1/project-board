@@ -9,7 +9,7 @@ import java.util.List;
 public class ArticleRepositoryCustomImpl extends QuerydslRepositorySupport implements ArticleRepositoryCustom {
     public ArticleRepositoryCustomImpl() {
         super(Article.class);
-    }
+    } //여기서 구현할 테이블(엔티티)이름의 클래스를 전달해준다.
 
     // select distinct(hashtag) from article where hashtag is not null;
     @Override

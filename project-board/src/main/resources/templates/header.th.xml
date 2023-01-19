@@ -6,5 +6,3 @@
     <attr sel="#login" sec:authorize="!isAuthenticated()" th:href="@{/login}"/>
     <attr sel="#logout" sec:authorize="isAuthenticated()" th:href="@{/logout}"/>
 </thlogic>
-
-<!--!isAuthenticated 로그인 버튼 보이고 아니면 안보이고-->
