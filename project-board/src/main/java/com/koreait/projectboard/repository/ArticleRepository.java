@@ -20,7 +20,7 @@ public interface ArticleRepository extends
         QuerydslPredicateExecutor<Article>,// like검색이 아닌 전체단어 일치 검색 //적용하고자하는 엔티티 이름: 완벽히 =로 검색하는건 가능
 
 // 쿼리에 적용하고자 하는 엔티티, 기본기능 중 완벽하게 동일한 것만 구분 가능(like는 아님)
-        QuerydslBinderCustomizer<QArticle>{ // like검색을 위해 오버라이드 필요함 //수정하는기능을 쓸때 반영하고자하는 엔티티 이름- qclass :
+        QuerydslBinderCustomizer<QArticle> { // like검색을 위해 오버라이드 필요함 //수정하는기능을 쓸때 반영하고자하는 엔티티 이름- qclass :
     //엔티티가 아닌 것을로 return 을 받기위해 queryDSL 사용
     //pageable : 한번에 가저올 수를 의미한다.
     Page<Article> findByTitleContaining(String title, Pageable pageable);

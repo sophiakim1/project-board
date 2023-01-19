@@ -56,8 +56,8 @@ public class ArticleController {
 
     @GetMapping("/search-hashtag")
     public String searchArticleHashtag( //searchType이 hashtag로 정해져 있어서 지움!
-                                        @RequestParam(required = false)String searchValue,
-                                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map
+            @RequestParam(required = false)String searchValue,
+            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map
     ){
         Page<ArticleResponse> articles = articleService.searchArticleViaHashTag(searchValue, pageable).map(ArticleResponse::from);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages()); //메소드를 만들어서 이렇게 가져올 수 있음
@@ -95,12 +95,12 @@ public class ArticleController {
 
     @PostMapping ("/{articleId}/form")
     public String updateArticle(
-            @PathVariable Long articleId,
-            @AuthenticationPrincipal BoardPrincipal boardPrincipal,
-            ArticleRequest articleRequest
+        @PathVariable Long articleId,
+        @AuthenticationPrincipal BoardPrincipal boardPrincipal,
+        ArticleRequest articleRequest
     ) {
-        articleService.updateArticle(articleId, articleRequest.toDto(boardPrincipal.toDto()));
-        return "redirect:/articles/" + articleId;
+            articleService.updateArticle(articleId, articleRequest.toDto(boardPrincipal.toDto()));
+            return "redirect:/articles/" + articleId;
     }
 
     @PostMapping("/{articleId}/delete")
